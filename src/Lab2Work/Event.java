@@ -2,7 +2,7 @@ package Lab2Work;
 
 import java.time.LocalDateTime;
 
-abstract class Event implements Comparable<Event>
+public abstract class Event implements Comparable<Event>
 {
     protected String name;
     protected LocalDateTime dateTime;

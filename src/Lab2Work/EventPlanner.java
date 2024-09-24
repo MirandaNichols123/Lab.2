@@ -26,7 +26,8 @@ public class EventPlanner
         frame.setVisible(true);
     }
 
-    public static void addDefaultEvents(EventListPanel eventListPanel) {
+    public static void addDefaultEvents(EventListPanel eventListPanel)
+    {
         List<Event> defaultEvents = new ArrayList<>();
 
         // Create some default events

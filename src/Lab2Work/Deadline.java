@@ -6,7 +6,7 @@ public class Deadline extends Event implements Completable
 {
     private boolean complete;
 
-    public Deadline(String name, java.time.LocalDateTime deadline)
+    public Deadline(String name, LocalDateTime deadline)
     {
         super(name, deadline);
         this.complete = false;
