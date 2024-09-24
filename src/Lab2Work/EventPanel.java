@@ -59,7 +59,7 @@ public class EventPanel extends JPanel
         if (!completable.isComplete())//Show the button if the event is incomplete
         {
             //JButton completeButton = new JButton("Complete");//Create the "Complete" button
-            completeButton.setFont(new Font("Serif", Font.PLAIN, 12));//Set the button font
+            completeButton.setFont(new Font("Serif", Font.BOLD, 12));//Set the button font
 
             //Adds ActionListener to handle completion when the button is clicked
             completeButton.addActionListener(_ -> {

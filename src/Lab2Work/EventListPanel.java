@@ -39,12 +39,15 @@ public class EventListPanel extends JPanel
 
         // Filtering checkboxes
         filterCompleted = new JCheckBox("Hide Completed");
+        filterCompleted.setFont(new Font("Serif", Font.PLAIN, 12));
         filterCompleted.addActionListener(_ -> updateEventDisplay());
 
         filterDeadlines = new JCheckBox("Hide Deadlines");
+        filterDeadlines.setFont(new Font("Serif", Font.PLAIN, 12));
         filterDeadlines.addActionListener(_ -> updateEventDisplay());
 
         filterMeetings = new JCheckBox("Hide Meetings");
+        filterMeetings.setFont(new Font("Serif", Font.PLAIN, 12));
         filterMeetings.addActionListener(_ -> updateEventDisplay());
 
         // "Add Event" button
@@ -74,7 +77,6 @@ public class EventListPanel extends JPanel
         events.add(event);
         updateEventDisplay();  // Refresh the display to include the new event
     }
-
     // Method to sort events based on the dropdown selection
     private void sortEvents()
     {

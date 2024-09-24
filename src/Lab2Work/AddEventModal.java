@@ -5,8 +5,7 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class AddEventModal extends JDialog
-{
+public class AddEventModal extends JDialog {
     private final EventListPanel eventListPanel;
 
     // Meeting input fields
@@ -34,8 +33,7 @@ public class AddEventModal extends JDialog
     private final JPanel cardPanel;  // Panel to hold different input forms
     private final CardLayout cardLayout;  // Layout manager for switching cards
 
-    public AddEventModal(JFrame parent, EventListPanel eventListPanel)
-    {
+    public AddEventModal(JFrame parent, EventListPanel eventListPanel) {
         super(parent, "Add Event", true);
         this.eventListPanel = eventListPanel;
 
@@ -73,52 +71,19 @@ public class AddEventModal extends JDialog
 
         pack();
         setLocationRelativeTo(parent);
-        setSize(300,300);
+        setSize(300, 300);
     }
-    //Meeting fields: Name, Start Time, End Time, and Location
-    private JPanel createMeetingForm()
-    {
+
+    // Meeting fields: Name, Start Time, End Time, and Location
+    private JPanel createMeetingForm() {
         JPanel meetingPanel = new JPanel(new GridLayout(0, 2));
 
         meetingPanel.add(new JLabel("Meeting Name:"));
         meetingNameField = new JTextField();
         meetingPanel.add(meetingNameField);
 
-        meetingPanel.add(new JLabel("Start Year:"));
-        meetingStartYear = new JTextField();
-        meetingPanel.add(meetingStartYear);
-
-        meetingPanel.add(new JLabel("Start Month:"));
-        meetingStartMonth = new JTextField();
-        meetingPanel.add(meetingStartMonth);
-
-        meetingPanel.add(new JLabel("Start Day:"));
-        meetingStartDay = new JTextField();
-        meetingPanel.add(meetingStartDay);
-
-        meetingPanel.add(new JLabel("Start Hour:"));
-        meetingStartHour = new JTextField();
-        meetingPanel.add(meetingStartHour);
-
-        meetingPanel.add(new JLabel("Start Minute:"));
-        meetingStartMinute = new JTextField();
-        meetingPanel.add(meetingStartMinute);
-
-        meetingPanel.add(new JLabel("AM/PM:"));
-        meetingStartAmPm = new JComboBox<>(new String[]{"AM", "PM"});
-        meetingPanel.add(meetingStartAmPm);
-
-        meetingPanel.add(new JLabel("End Hour:"));
-        meetingEndHour = new JTextField();
-        meetingPanel.add(meetingEndHour);
-
-        meetingPanel.add(new JLabel("End Minute:"));
-        meetingEndMinute = new JTextField();
-        meetingPanel.add(meetingEndMinute);
-
-        meetingPanel.add(new JLabel("AM/PM:"));
-        meetingEndAmPm = new JComboBox<>(new String[]{"AM", "PM"});
-        meetingPanel.add(meetingEndAmPm);
+        // Add fields for meeting start time and end time
+        addMeetingTimeFields(meetingPanel);
 
         meetingPanel.add(new JLabel("Location:"));
         meetingLocation = new JTextField();
@@ -126,131 +91,139 @@ public class AddEventModal extends JDialog
 
         return meetingPanel;
     }
-    //Deadline fields: Name and Date
-    private JPanel createDeadlineForm()
-    {
+
+    private void addMeetingTimeFields(JPanel panel) {
+        panel.add(new JLabel("Start Year:"));
+        meetingStartYear = new JTextField();
+        panel.add(meetingStartYear);
+
+        panel.add(new JLabel("Start Month:"));
+        meetingStartMonth = new JTextField();
+        panel.add(meetingStartMonth);
+
+        panel.add(new JLabel("Start Day:"));
+        meetingStartDay = new JTextField();
+        panel.add(meetingStartDay);
+
+        panel.add(new JLabel("Start Hour:"));
+        meetingStartHour = new JTextField();
+        panel.add(meetingStartHour);
+
+        panel.add(new JLabel("Start Minute:"));
+        meetingStartMinute = new JTextField();
+        panel.add(meetingStartMinute);
+
+        panel.add(new JLabel("AM/PM:"));
+        meetingStartAmPm = new JComboBox<>(new String[]{"AM", "PM"});
+        panel.add(meetingStartAmPm);
+
+        panel.add(new JLabel("End Hour:"));
+        meetingEndHour = new JTextField();
+        panel.add(meetingEndHour);
+
+        panel.add(new JLabel("End Minute:"));
+        meetingEndMinute = new JTextField();
+        panel.add(meetingEndMinute);
+
+        panel.add(new JLabel("AM/PM:"));
+        meetingEndAmPm = new JComboBox<>(new String[]{"AM", "PM"});
+        panel.add(meetingEndAmPm);
+    }
+
+    // Deadline fields: Name and Date
+    private JPanel createDeadlineForm() {
         JPanel deadlinePanel = new JPanel(new GridLayout(0, 2));
 
         deadlinePanel.add(new JLabel("Deadline Name:"));
         deadlineNameField = new JTextField();
         deadlinePanel.add(deadlineNameField);
 
-        deadlinePanel.add(new JLabel("Start Year:"));
-        deadlineStartYear = new JTextField();
-        deadlinePanel.add(deadlineStartYear);
-
-        deadlinePanel.add(new JLabel("Start Month:"));
-        deadlineStartMonth = new JTextField();
-        deadlinePanel.add(deadlineStartMonth);
-
-        deadlinePanel.add(new JLabel("Start Day:"));
-        deadlineStartDay = new JTextField();
-        deadlinePanel.add(deadlineStartDay);
-
-        deadlinePanel.add(new JLabel("Start Hour:"));
-        deadlineStartHour = new JTextField();
-        deadlinePanel.add(deadlineStartHour);
-
-        deadlinePanel.add(new JLabel("Start Minute:"));
-        deadlineStartMinute = new JTextField();
-        deadlinePanel.add(deadlineStartMinute);
-
-        deadlinePanel.add(new JLabel("AM/PM:"));
-        deadlineAmPm = new JComboBox<>(new String[]{"AM", "PM"});
-        deadlinePanel.add(deadlineAmPm);
+        // Add fields for deadline date and time
+        addDeadlineTimeFields(deadlinePanel);
 
         return deadlinePanel;
     }
 
-    //Switches between two forms based on event type
-    private void updateForm(String eventType)
-    {
+    private void addDeadlineTimeFields(JPanel panel) {
+        panel.add(new JLabel("Start Year:"));
+        deadlineStartYear = new JTextField();
+        panel.add(deadlineStartYear);
+
+        panel.add(new JLabel("Start Month:"));
+        deadlineStartMonth = new JTextField();
+        panel.add(deadlineStartMonth);
+
+        panel.add(new JLabel("Start Day:"));
+        deadlineStartDay = new JTextField();
+        panel.add(deadlineStartDay);
+
+        panel.add(new JLabel("Start Hour:"));
+        deadlineStartHour = new JTextField();
+        panel.add(deadlineStartHour);
+
+        panel.add(new JLabel("Start Minute:"));
+        deadlineStartMinute = new JTextField();
+        panel.add(deadlineStartMinute);
+
+        panel.add(new JLabel("AM/PM:"));
+        deadlineAmPm = new JComboBox<>(new String[]{"AM", "PM"});
+        panel.add(deadlineAmPm);
+    }
+
+    // Switches between two forms based on event type
+    private void updateForm(String eventType) {
         cardLayout.show(cardPanel, eventType);
     }
 
-    //adding the event based on the selected type
-    private void handleAddEvent(String eventType)
-    {
+    // Adding the event based on the selected type
+    private void handleAddEvent(String eventType) {
         try {
-            if (eventType.equals("Meeting"))
-            {
-                //inputs for a startmeeting
+            if (eventType.equals("Meeting")) {
+                LocalDateTime startTime = parseDateTime(meetingStartYear, meetingStartMonth, meetingStartDay,
+                        meetingStartHour, meetingStartMinute, meetingStartAmPm);
+                LocalDateTime endTime = parseDateTime(meetingStartYear, meetingStartMonth, meetingStartDay,
+                        meetingEndHour, meetingEndMinute, meetingEndAmPm);
                 String name = meetingNameField.getText();
-                int startYear = Integer.parseInt(meetingStartYear.getText());
-                int startMonth = Integer.parseInt(meetingStartMonth.getText());
-                int startDay = Integer.parseInt(meetingStartDay.getText());
-                int startHour = Integer.parseInt(meetingStartHour.getText());
-                int startMinute = Integer.parseInt(meetingStartMinute.getText());
-                String startAmPm = (String) meetingStartAmPm.getSelectedItem();
-
-                //24-hour format
-                assert startAmPm != null;
-                if (startAmPm.equals("PM") && startHour != 12)
-                {
-                    startHour += 12;
-                } else if (startAmPm.equals("AM") && startHour == 12)
-                {
-                    startHour = 0;
-                }
-                //collect inputs for endMeeting
-                int endHour = Integer.parseInt(meetingEndHour.getText());
-                int endMinute = Integer.parseInt(meetingEndMinute.getText());
-                String endAmPm = (String) meetingEndAmPm.getSelectedItem();
-
-                //24-hour format
-                assert endAmPm != null;
-                if (endAmPm.equals("PM") && endHour != 12)
-                {
-                    endHour += 12;
-                } else if (endAmPm.equals("AM") && endHour == 12)
-                {
-                    endHour = 0;
-                }
                 String location = meetingLocation.getText();
 
-                //create the start and end time objects
-                LocalDateTime startTime = LocalDateTime.of(startYear, startMonth, startDay, startHour, startMinute);
-                LocalDateTime endTime = LocalDateTime.of(startYear, startMonth, startDay, endHour, endMinute);
-
-                //add the new Meeting event
+                // Create the new Meeting event
                 Meeting newMeeting = new Meeting(name, startTime, endTime, location);
                 eventListPanel.addEvent(newMeeting);
-
-            }
-            else if (eventType.equals("Deadline"))
-            {
-                //collected inputs for Deadline
+            } else if (eventType.equals("Deadline")) {
+                LocalDateTime startTime = parseDateTime(deadlineStartYear, deadlineStartMonth, deadlineStartDay,
+                        deadlineStartHour, deadlineStartMinute, deadlineAmPm);
                 String name = deadlineNameField.getText();
-                int startYear = Integer.parseInt(deadlineStartYear.getText());
-                int startMonth = Integer.parseInt(deadlineStartMonth.getText());
-                int startDay = Integer.parseInt(deadlineStartDay.getText());
-                int startHour = Integer.parseInt(deadlineStartHour.getText());
-                int startMinute = Integer.parseInt(deadlineStartMinute.getText());
-                String deadlineAmPmValue = (String) deadlineAmPm.getSelectedItem();
 
-                //24-hour format
-                assert deadlineAmPmValue != null;
-                if (deadlineAmPmValue.equals("PM") && startHour != 12)
-                {
-                    startHour += 12;
-                } else if (deadlineAmPmValue.equals("AM") && startHour == 12)
-                {
-                    startHour = 0;
-                }
-
-                //create the start time object
-                LocalDateTime startTime = LocalDateTime.of(startYear, startMonth, startDay, startHour, startMinute);
-
-                //add the new Deadline event
+                // Create the new Deadline event
                 Deadline newDeadline = new Deadline(name, startTime);
                 eventListPanel.addEvent(newDeadline);
             }
-            //Close the modal after adding the event
+            // Close the modal after adding the event
             dispose();
-        }
-        catch (NumberFormatException ex)
-        {
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Please enter valid numbers for time fields.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    // Helper method to parse date and time from input fields
+    private LocalDateTime parseDateTime(JTextField yearField, JTextField monthField, JTextField dayField,
+                                        JTextField hourField, JTextField minuteField, JComboBox<String> amPmField) {
+        int year = Integer.parseInt(yearField.getText());
+        int month = Integer.parseInt(monthField.getText());
+        int day = Integer.parseInt(dayField.getText());
+        int hour = Integer.parseInt(hourField.getText());
+        int minute = Integer.parseInt(minuteField.getText());
+        String amPm = (String) amPmField.getSelectedItem();
+
+        // Convert to 24-hour format
+        assert amPm != null;
+        if (amPm.equals("PM") && hour != 12) {
+            hour += 12;
+        } else if (amPm.equals("AM") && hour == 12) {
+            hour = 0;
+        }
+
+        // Create and return the LocalDateTime object
+        return LocalDateTime.of(year, month, day, hour, minute);
     }
 }
