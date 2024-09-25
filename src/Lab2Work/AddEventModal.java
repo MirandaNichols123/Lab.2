@@ -223,14 +223,12 @@ public class AddEventModal extends JDialog
             JOptionPane.showMessageDialog(this, "Month must be between 1 and 12.", "Invalid Month", JOptionPane.ERROR_MESSAGE);
             throw new NumberFormatException("Invalid month entered");
         }
-
         int day = Integer.parseInt(dayField.getText());
         if (day < 1 || day > 31)
         {
             JOptionPane.showMessageDialog(this, "Day must be between 1 and 31.", "Invalid Day", JOptionPane.ERROR_MESSAGE);
             throw new NumberFormatException("Invalid day entered");
         }
-
         int hour = Integer.parseInt(hourField.getText());
         if (hour < 1 || hour > 12)
         {
@@ -240,7 +238,6 @@ public class AddEventModal extends JDialog
         int minute = Integer.parseInt(minuteField.getText());
         if (minute < 0 || minute > 59)
         {
-            // Show an error dialog if the day is invalid
             JOptionPane.showMessageDialog(this, "Minute must be between 0 and 59.", "Invalid minute", JOptionPane.ERROR_MESSAGE);
             throw new NumberFormatException("Invalid minute entered");
         }
