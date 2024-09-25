@@ -238,10 +238,10 @@ public class AddEventModal extends JDialog
             throw new NumberFormatException("Invalid hour entered");
         }
         int minute = Integer.parseInt(minuteField.getText());
-        if (minute <= 1 || minute >= 60)
+        if (minute < 0 || minute > 60)
         {
             // Show an error dialog if the day is invalid
-            JOptionPane.showMessageDialog(this, "Minute must be between 1 and 60.", "Invalid minute", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Minute must be between 0 and 60.", "Invalid minute", JOptionPane.ERROR_MESSAGE);
             throw new NumberFormatException("Invalid minute entered");
         }
         String amPm = (String) amPmField.getSelectedItem();
