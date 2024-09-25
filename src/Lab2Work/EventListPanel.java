@@ -2,6 +2,8 @@ package Lab2Work;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -27,7 +29,6 @@ public class EventListPanel extends JPanel
         displayPanel = createDisplayPanel();
         add(displayPanel, BorderLayout.CENTER);
     }
-
     //create the control panel
     private JPanel createControlPanel()
     {
@@ -40,15 +41,34 @@ public class EventListPanel extends JPanel
         //filtering checkboxes
         filterCompleted = new JCheckBox("Hide Completed");
         filterCompleted.setFont(new Font("Serif", Font.PLAIN, 12));
-        filterCompleted.addActionListener(_ -> updateEventDisplay());
+        //anonymous class
+        filterCompleted.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                updateEventDisplay();
+            }
+        });
 
         filterDeadlines = new JCheckBox("Hide Deadlines");
         filterDeadlines.setFont(new Font("Serif", Font.PLAIN, 12));
-        filterDeadlines.addActionListener(_ -> updateEventDisplay());
+        filterDeadlines.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                updateEventDisplay();
+            }
+        });
 
         filterMeetings = new JCheckBox("Hide Meetings");
         filterMeetings.setFont(new Font("Serif", Font.PLAIN, 12));
-        filterMeetings.addActionListener(_ -> updateEventDisplay());
+        filterMeetings.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                updateEventDisplay();
+            }
+        });
 
         //add button
         JButton addEventButton = new JButton("Add Event");
@@ -63,14 +83,12 @@ public class EventListPanel extends JPanel
 
         return controlPanel;
     }
-
     //create the event display panel
     private JPanel createDisplayPanel()
     {
         //stack event panels vertically
         return new JPanel(new GridLayout(0, 1));
     }
-
     //add an event to the list
     public void addEvent(Event event)
     {
@@ -101,7 +119,6 @@ public class EventListPanel extends JPanel
             updateEventDisplay();
         }
     }
-
     //update the event display
     private void updateEventDisplay()
     {
@@ -126,7 +143,6 @@ public class EventListPanel extends JPanel
         revalidate(); //refresh the display
         repaint(); //redraw the panel
     }
-
     //open the modal for adding a new event
     private void showAddEventModal()
     {

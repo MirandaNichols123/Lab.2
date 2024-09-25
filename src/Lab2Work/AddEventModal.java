@@ -75,7 +75,6 @@ public class AddEventModal extends JDialog
         setLocationRelativeTo(parent);
         setSize(300, 300);
     }
-
     //meeting fields
     private JPanel createMeetingForm()
     {
@@ -94,18 +93,18 @@ public class AddEventModal extends JDialog
 
         return meetingPanel;
     }
-
+    //adding meeting time feilds
     private void addMeetingTimeFields(JPanel panel)
     {
-        panel.add(new JLabel("Start Year:"));
+        panel.add(new JLabel("Start Year(xxxx):"));
         meetingStartYear = new JTextField();
         panel.add(meetingStartYear);
 
-        panel.add(new JLabel("Start Month:"));
+        panel.add(new JLabel("Start Month(xx):"));
         meetingStartMonth = new JTextField();
         panel.add(meetingStartMonth);
 
-        panel.add(new JLabel("Start Day:"));
+        panel.add(new JLabel("Start Day(xx):"));
         meetingStartDay = new JTextField();
         panel.add(meetingStartDay);
 
@@ -133,7 +132,6 @@ public class AddEventModal extends JDialog
         meetingEndAmPm = new JComboBox<>(new String[]{"AM", "PM"});
         panel.add(meetingEndAmPm);
     }
-
     //deadline fields
     private JPanel createDeadlineForm()
     {
@@ -148,14 +146,14 @@ public class AddEventModal extends JDialog
 
         return deadlinePanel;
     }
-
+    //adding time fields for deadline
     private void addDeadlineTimeFields(JPanel panel)
     {
-        panel.add(new JLabel("Start Year:"));
+        panel.add(new JLabel("Start Year(xxxx):"));
         deadlineStartYear = new JTextField();
         panel.add(deadlineStartYear);
 
-        panel.add(new JLabel("Start Month:"));
+        panel.add(new JLabel("Start Month(xx):"));
         deadlineStartMonth = new JTextField();
         panel.add(deadlineStartMonth);
 
@@ -185,8 +183,6 @@ public class AddEventModal extends JDialog
     //adding the event based on the selected type
     private void handleAddEvent(String eventType)
     {
-        try
-        {
             if (eventType.equals("Meeting"))
             {
                 LocalDateTime startTime = parseDateTime(meetingStartYear, meetingStartMonth, meetingStartDay,
@@ -212,10 +208,6 @@ public class AddEventModal extends JDialog
             }
             //close the modal after adding the event
             dispose();
-        } catch (NumberFormatException ex)
-        {
-            JOptionPane.showMessageDialog(this, "Please enter valid numbers for time fields.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     //helper method to parse date and time from input fields
@@ -224,9 +216,34 @@ public class AddEventModal extends JDialog
     {
         int year = Integer.parseInt(yearField.getText());
         int month = Integer.parseInt(monthField.getText());
+        //check if the month is valid (between 1 and 12)
+        if (month < 1 || month > 12)
+        {
+            //show an error dialog if the month is invalid
+            JOptionPane.showMessageDialog(this, "Month must be between 1 and 12.", "Invalid Month", JOptionPane.ERROR_MESSAGE);
+            throw new NumberFormatException("Invalid month entered");
+        }
+
         int day = Integer.parseInt(dayField.getText());
+        if (day < 1 || day > 31)
+        {
+            JOptionPane.showMessageDialog(this, "Day must be between 1 and 31.", "Invalid Day", JOptionPane.ERROR_MESSAGE);
+            throw new NumberFormatException("Invalid day entered");
+        }
+
         int hour = Integer.parseInt(hourField.getText());
+        if (hour < 1 || hour > 12)
+        {
+            JOptionPane.showMessageDialog(this, "Hour must be between 1 and 12.", "Invalid Hour", JOptionPane.ERROR_MESSAGE);
+            throw new NumberFormatException("Invalid hour entered");
+        }
         int minute = Integer.parseInt(minuteField.getText());
+        if (minute <= 1 || minute >= 60)
+        {
+            // Show an error dialog if the day is invalid
+            JOptionPane.showMessageDialog(this, "Minute must be between 1 and 60.", "Invalid minute", JOptionPane.ERROR_MESSAGE);
+            throw new NumberFormatException("Invalid minute entered");
+        }
         String amPm = (String) amPmField.getSelectedItem();
 
         //convert to 24-hour format

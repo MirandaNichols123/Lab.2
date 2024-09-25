@@ -57,7 +57,7 @@ public class EventPanel extends JPanel
         {
             completeButton.setFont(new Font("Serif", Font.BOLD, 12)); //set the button font
 
-            //adds ActionListener to handle completion when the button is clicked
+            //adds lambda to handle completion when the button is clicked
             completeButton.addActionListener(_ -> {
                 completable.complete();
                 updatePanel();
@@ -79,7 +79,7 @@ public class EventPanel extends JPanel
         LocalDateTime eventDateTime = event.getDateTime();
         if (eventDateTime.isAfter(month))
         {
-            setBackground(Color.GREEN); //distant event
+            setBackground(Color.GREEN); //distant event(more than one month)
         } else if (eventDateTime.isBefore(now))
         {
             setBackground(Color.RED); //overdue event
