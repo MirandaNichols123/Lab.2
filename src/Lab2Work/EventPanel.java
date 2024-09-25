@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class EventPanel extends JPanel
 {
     private final Event event;
-    private final JButton completeButton; // Store a reference to the complete button
+    private final JButton completeButton;
 
     public EventPanel(Event event)
     {
@@ -16,18 +16,17 @@ public class EventPanel extends JPanel
         setLayout(new BorderLayout());
         //used for arranging components
         setPreferredSize(new Dimension(300, 100));
-        //
         this.completeButton = new JButton("Complete");
-        //
         updatePanel();
     }
-    private void updatePanel() {
+    private void updatePanel()
+    {
         removeAll();
 
-        JPanel contentPanel = new JPanel(new GridLayout(0, 1, 5, 5));//creates grid layout with 5px spacing
+        JPanel contentPanel = new JPanel(new GridLayout(0, 1, 5, 5)); //creates grid layout with 5px spacing
         contentPanel.setOpaque(false);//transparent background
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");//date-time formatter
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"); //date-time formatter
         contentPanel.add(new JLabel("Name: " + event.getName()));
         contentPanel.add(new JLabel("Date Time: " + event.getDateTime().format(formatter)));
 
@@ -41,36 +40,33 @@ public class EventPanel extends JPanel
         {
             contentPanel.add(new JLabel("Complete: " + completable.isComplete()));
             // Add the complete button
-            JPanel buttonPanel = createButtonPanel(completable);  // Use the refactored method to create the button panel
-            add(buttonPanel, BorderLayout.EAST);  // Add the button panel on the right side of the EventPanel
+            JPanel buttonPanel = createButtonPanel(completable); //use the refactored method to create the button panel
+            add(buttonPanel, BorderLayout.EAST);
         }
-
-        // Add the content panel with event details to the left side of the EventPanel
         add(contentPanel, BorderLayout.WEST);
-        updateUrgency();  // Update the background color based on event urgency
+        updateUrgency();
         revalidate();
         repaint();
     }
-    // Create the panel for the "Complete" button if the event is not complete
+    //create the panel for the "Complete" button if the event is not complete
     private JPanel createButtonPanel(Completable completable)
     {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-        if (!completable.isComplete())//Show the button if the event is incomplete
+        if (!completable.isComplete())//show the button if the event is incomplete
         {
-            //JButton completeButton = new JButton("Complete");//Create the "Complete" button
-            completeButton.setFont(new Font("Serif", Font.BOLD, 12));//Set the button font
+            completeButton.setFont(new Font("Serif", Font.BOLD, 12)); //set the button font
 
-            //Adds ActionListener to handle completion when the button is clicked
+            //adds ActionListener to handle completion when the button is clicked
             completeButton.addActionListener(_ -> {
                 completable.complete();
                 updatePanel();
             });
 
-            buttonPanel.add(completeButton);//Add button to the button panel
+            buttonPanel.add(completeButton);//add button to the button panel
         }
 
-        buttonPanel.setOpaque(false);//Make the button panel transparent
+        buttonPanel.setOpaque(false);//make the button panel transparent
         return buttonPanel;
     }
     public void updateUrgency()
@@ -83,13 +79,13 @@ public class EventPanel extends JPanel
         LocalDateTime eventDateTime = event.getDateTime();
         if (eventDateTime.isAfter(month))
         {
-            setBackground(Color.GREEN); // Distant event
+            setBackground(Color.GREEN); //distant event
         } else if (eventDateTime.isBefore(now))
         {
-            setBackground(Color.RED); // Overdue event
+            setBackground(Color.RED); //overdue event
         } else
         {
-            setBackground(Color.YELLOW); // Imminent event
+            setBackground(Color.YELLOW); //imminent event
         }
     }
 }

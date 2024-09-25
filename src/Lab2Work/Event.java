@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 
 public abstract class Event implements Comparable<Event>
 {
-    protected String name;
-    protected LocalDateTime dateTime;
+    protected String name; //name of event
+    protected LocalDateTime dateTime; //start date and time of event
 
     public Event(String name, LocalDateTime dateTime)
     {
         this.name = name;
         this.dateTime = dateTime;
     }
-    public abstract String getName();
+    public abstract String getName(); //returns name of event
 
     public LocalDateTime getDateTime()
     {
@@ -28,6 +28,7 @@ public abstract class Event implements Comparable<Event>
     }
     public int compareTo(Event e)
     {
+        //compares dateTime of event with dateTime of incoming event
         return dateTime.compareTo(e.dateTime);
     }
 

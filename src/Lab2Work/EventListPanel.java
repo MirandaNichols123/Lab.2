@@ -19,25 +19,25 @@ public class EventListPanel extends JPanel
         events = new ArrayList<>();
         setLayout(new BorderLayout());
 
-        // Initialize and add control panel (containing sorting, filtering, and "Add Event" button)
+        //initialize and add control panel
         JPanel controlPanel = createControlPanel();
         add(controlPanel, BorderLayout.NORTH);
 
-        // Initialize and add display panel (where EventPanels will be shown)
+        //initialize and add display panel
         displayPanel = createDisplayPanel();
         add(displayPanel, BorderLayout.CENTER);
     }
 
-    // Method to create the control panel
+    //create the control panel
     private JPanel createControlPanel()
     {
         JPanel controlPanel = new JPanel(new FlowLayout());
 
-        // Sorting dropdown
+        //sorting dropdown
         sortDropDown = new JComboBox<>(new String[]{"Sort by Name", "Sort by Date", "Reverse Name", "Reverse Date"});
         sortDropDown.addActionListener(_ -> sortEvents());  // Lambda to trigger sorting
 
-        // Filtering checkboxes
+        //filtering checkboxes
         filterCompleted = new JCheckBox("Hide Completed");
         filterCompleted.setFont(new Font("Serif", Font.PLAIN, 12));
         filterCompleted.addActionListener(_ -> updateEventDisplay());
@@ -50,11 +50,11 @@ public class EventListPanel extends JPanel
         filterMeetings.setFont(new Font("Serif", Font.PLAIN, 12));
         filterMeetings.addActionListener(_ -> updateEventDisplay());
 
-        // "Add Event" button
+        //add button
         JButton addEventButton = new JButton("Add Event");
         addEventButton.addActionListener(_ -> showAddEventModal());
 
-        // Add all components to controlPanel
+        //add all components to controlPanel
         controlPanel.add(sortDropDown);
         controlPanel.add(filterCompleted);
         controlPanel.add(filterDeadlines);
@@ -64,20 +64,20 @@ public class EventListPanel extends JPanel
         return controlPanel;
     }
 
-    // Method to create the event display panel
+    //create the event display panel
     private JPanel createDisplayPanel()
     {
-        // Stack event panels vertically
+        //stack event panels vertically
         return new JPanel(new GridLayout(0, 1));
     }
 
-    // Method to add an event to the list
+    //add an event to the list
     public void addEvent(Event event)
     {
         events.add(event);
-        updateEventDisplay();  // Refresh the display to include the new event
+        updateEventDisplay();
     }
-    // Method to sort events based on the dropdown selection
+    //sort events based on the dropdown selection
     private void sortEvents()
     {
         String selectedOption = (String) sortDropDown.getSelectedItem();
@@ -98,36 +98,36 @@ public class EventListPanel extends JPanel
                     events.sort(Comparator.comparing(Event::getDateTime).reversed());
                     break;
             }
-            updateEventDisplay();  // Re-display the events after sorting
+            updateEventDisplay();
         }
     }
 
-    // Method to update the event display (with sorting and filters applied)
+    //update the event display
     private void updateEventDisplay()
     {
-        displayPanel.removeAll();  // Clear the previous event panels
+        displayPanel.removeAll(); //clear the previous event panels
 
         for (Event event : events)
         {
-            // Check filters: hide events based on selected filters
+            //check filters
             if ((filterCompleted.isSelected() && event instanceof Completable && ((Completable) event).isComplete())
                     || (filterDeadlines.isSelected() && event instanceof Deadline)
                     || (filterMeetings.isSelected() && event instanceof Meeting)) {
-                continue;  // Skip this event
+                continue;
             }
 
-            EventPanel eventPanel = new EventPanel(event);  // Create the EventPanel
-            displayPanel.add(eventPanel);  // Add the EventPanel to the display panel
+            EventPanel eventPanel = new EventPanel(event);
+            displayPanel.add(eventPanel);
 
-            // Add a border between event panels
+            //add a border between event panels
             eventPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, Color.BLACK));
         }
 
-        revalidate();  // Refresh the display
-        repaint();  // Redraw the panel
+        revalidate(); //refresh the display
+        repaint(); //redraw the panel
     }
 
-    // Method to open the modal for adding a new event
+    //open the modal for adding a new event
     private void showAddEventModal()
     {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);

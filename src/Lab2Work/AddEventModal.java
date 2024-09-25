@@ -5,10 +5,11 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class AddEventModal extends JDialog {
+public class AddEventModal extends JDialog
+{
     private final EventListPanel eventListPanel;
 
-    // Meeting input fields
+    //meeting input fields
     private JTextField meetingNameField;
     private JTextField meetingStartDay;
     private JTextField meetingStartMonth;
@@ -21,7 +22,7 @@ public class AddEventModal extends JDialog {
     private JComboBox<String> meetingEndAmPm;
     private JTextField meetingLocation;
 
-    // Deadline input fields
+    //deadline input fields
     private JTextField deadlineNameField;
     private JTextField deadlineStartDay;
     private JTextField deadlineStartMonth;
@@ -30,41 +31,42 @@ public class AddEventModal extends JDialog {
     private JTextField deadlineStartMinute;
     private JComboBox<String> deadlineAmPm;
 
-    private final JPanel cardPanel;  // Panel to hold different input forms
-    private final CardLayout cardLayout;  // Layout manager for switching cards
+    private final JPanel cardPanel; //panel to hold different input forms
+    private final CardLayout cardLayout; //layout manager for switching cards
 
-    public AddEventModal(JFrame parent, EventListPanel eventListPanel) {
+    public AddEventModal(JFrame parent, EventListPanel eventListPanel)
+    {
         super(parent, "Add Event", true);
         this.eventListPanel = eventListPanel;
 
         setLayout(new BorderLayout());
 
-        // Create the dropdown to select event type
+        //create the dropdown to select event type
         String[] eventTypes = {"Meeting", "Deadline"};
         JComboBox<String> eventTypeDropdown = new JComboBox<>(eventTypes);
         eventTypeDropdown.addActionListener(_ -> updateForm((String) eventTypeDropdown.getSelectedItem()));
 
-        // Add dropdown to the top
+        //add dropdown to the top
         add(eventTypeDropdown, BorderLayout.NORTH);
 
-        // Create the panel to switch between forms
+        //create the panel to switch between forms
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
 
-        // Create separate forms for "Meeting" and "Deadline"
+        //create separate forms for "Meeting" and "Deadline"
         JPanel meetingForm = createMeetingForm();
         JPanel deadlineForm = createDeadlineForm();
 
-        // Add forms to the card panel
+        //add forms to the card panel
         cardPanel.add(meetingForm, "Meeting");
         cardPanel.add(deadlineForm, "Deadline");
 
         add(cardPanel, BorderLayout.CENTER);
 
-        // Show Meeting form by default
+        //show Meeting form by default
         updateForm("Meeting");
 
-        // Add a button to submit the form
+        //add a button to submit the form
         JButton addButton = new JButton("Add Event");
         addButton.addActionListener(_ -> handleAddEvent((String) Objects.requireNonNull(eventTypeDropdown.getSelectedItem())));
         add(addButton, BorderLayout.SOUTH);
@@ -74,15 +76,16 @@ public class AddEventModal extends JDialog {
         setSize(300, 300);
     }
 
-    // Meeting fields: Name, Start Time, End Time, and Location
-    private JPanel createMeetingForm() {
+    //meeting fields
+    private JPanel createMeetingForm()
+    {
         JPanel meetingPanel = new JPanel(new GridLayout(0, 2));
 
         meetingPanel.add(new JLabel("Meeting Name:"));
         meetingNameField = new JTextField();
         meetingPanel.add(meetingNameField);
 
-        // Add fields for meeting start time and end time
+        //add fields for meeting start time and end time
         addMeetingTimeFields(meetingPanel);
 
         meetingPanel.add(new JLabel("Location:"));
@@ -92,7 +95,8 @@ public class AddEventModal extends JDialog {
         return meetingPanel;
     }
 
-    private void addMeetingTimeFields(JPanel panel) {
+    private void addMeetingTimeFields(JPanel panel)
+    {
         panel.add(new JLabel("Start Year:"));
         meetingStartYear = new JTextField();
         panel.add(meetingStartYear);
@@ -130,21 +134,23 @@ public class AddEventModal extends JDialog {
         panel.add(meetingEndAmPm);
     }
 
-    // Deadline fields: Name and Date
-    private JPanel createDeadlineForm() {
+    //deadline fields
+    private JPanel createDeadlineForm()
+    {
         JPanel deadlinePanel = new JPanel(new GridLayout(0, 2));
 
         deadlinePanel.add(new JLabel("Deadline Name:"));
         deadlineNameField = new JTextField();
         deadlinePanel.add(deadlineNameField);
 
-        // Add fields for deadline date and time
+        //add fields for deadline date and time
         addDeadlineTimeFields(deadlinePanel);
 
         return deadlinePanel;
     }
 
-    private void addDeadlineTimeFields(JPanel panel) {
+    private void addDeadlineTimeFields(JPanel panel)
+    {
         panel.add(new JLabel("Start Year:"));
         deadlineStartYear = new JTextField();
         panel.add(deadlineStartYear);
@@ -170,15 +176,19 @@ public class AddEventModal extends JDialog {
         panel.add(deadlineAmPm);
     }
 
-    // Switches between two forms based on event type
-    private void updateForm(String eventType) {
+    //switches between two forms based on event type
+    private void updateForm(String eventType)
+    {
         cardLayout.show(cardPanel, eventType);
     }
 
-    // Adding the event based on the selected type
-    private void handleAddEvent(String eventType) {
-        try {
-            if (eventType.equals("Meeting")) {
+    //adding the event based on the selected type
+    private void handleAddEvent(String eventType)
+    {
+        try
+        {
+            if (eventType.equals("Meeting"))
+            {
                 LocalDateTime startTime = parseDateTime(meetingStartYear, meetingStartMonth, meetingStartDay,
                         meetingStartHour, meetingStartMinute, meetingStartAmPm);
                 LocalDateTime endTime = parseDateTime(meetingStartYear, meetingStartMonth, meetingStartDay,
@@ -186,28 +196,32 @@ public class AddEventModal extends JDialog {
                 String name = meetingNameField.getText();
                 String location = meetingLocation.getText();
 
-                // Create the new Meeting event
+                //create the new Meeting event
                 Meeting newMeeting = new Meeting(name, startTime, endTime, location);
                 eventListPanel.addEvent(newMeeting);
-            } else if (eventType.equals("Deadline")) {
+            }
+            else if (eventType.equals("Deadline"))
+            {
                 LocalDateTime startTime = parseDateTime(deadlineStartYear, deadlineStartMonth, deadlineStartDay,
                         deadlineStartHour, deadlineStartMinute, deadlineAmPm);
                 String name = deadlineNameField.getText();
 
-                // Create the new Deadline event
+                //create the new Deadline event
                 Deadline newDeadline = new Deadline(name, startTime);
                 eventListPanel.addEvent(newDeadline);
             }
-            // Close the modal after adding the event
+            //close the modal after adding the event
             dispose();
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             JOptionPane.showMessageDialog(this, "Please enter valid numbers for time fields.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // Helper method to parse date and time from input fields
+    //helper method to parse date and time from input fields
     private LocalDateTime parseDateTime(JTextField yearField, JTextField monthField, JTextField dayField,
-                                        JTextField hourField, JTextField minuteField, JComboBox<String> amPmField) {
+                                        JTextField hourField, JTextField minuteField, JComboBox<String> amPmField)
+    {
         int year = Integer.parseInt(yearField.getText());
         int month = Integer.parseInt(monthField.getText());
         int day = Integer.parseInt(dayField.getText());
@@ -215,15 +229,17 @@ public class AddEventModal extends JDialog {
         int minute = Integer.parseInt(minuteField.getText());
         String amPm = (String) amPmField.getSelectedItem();
 
-        // Convert to 24-hour format
+        //convert to 24-hour format
         assert amPm != null;
-        if (amPm.equals("PM") && hour != 12) {
+        if (amPm.equals("PM") && hour != 12)
+        {
             hour += 12;
-        } else if (amPm.equals("AM") && hour == 12) {
+        } else if (amPm.equals("AM") && hour == 12)
+        {
             hour = 0;
         }
 
-        // Create and return the LocalDateTime object
+        //create and return the LocalDateTime object
         return LocalDateTime.of(year, month, day, hour, minute);
     }
 }

@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 public class Meeting extends Event implements Completable
 {
-    private LocalDateTime endDateTime;
-    private String location;
-    private boolean completed;
+    private LocalDateTime endDateTime; //end time of meeting
+    private String location; //location of meeting
+    private boolean completed; //track if the meeting is complete
 
     public Meeting(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, String location)
     {
-        super(name, startDateTime);
+        super(name, startDateTime); //call passes name and start date to event superclass
         this.endDateTime = endDateTime;
         this.location = location;
         completed = false;
@@ -30,7 +30,7 @@ public class Meeting extends Event implements Completable
     }
     public Duration getDuration()
     {
-        return Duration.between(dateTime, endDateTime);
+        return Duration.between(dateTime, endDateTime); //gets durations time
     }
     public String getLocation()
     {
